@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application
+  namespace: default  # You can change this to the specific namespace if needed
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: application
+  template:
+    metadata:
+      labels:
+        app: application
+    spec:
+      containers:
+      - name: application
+        image: gokulraj8/sample-app:v1
+        ports:
+        - containerPort: 5000
+        env:
+        - name: ALLOY_ENDPOINT
+          value: "http://alloy.default.svc.cluster.local:4320"  # Dynamically set the Alloy endpoint
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: application
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 5000
+  selector:
+    app: application

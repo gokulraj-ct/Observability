@@ -1,0 +1,17 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+      grpc:
+
+exporters:
+  otlp:
+    endpoint: "http://tempo:3100" # Replace with Tempo’s endpoint and port
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlp]

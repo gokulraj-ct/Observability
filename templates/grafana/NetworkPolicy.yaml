@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: alertmanager-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: alertmanager  # Ensure this matches the labels of your Alertmanager pods
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector: 
+        matchLabels:
+          app: prometheus  # Example: Allow traffic from Prometheus pods
+    ports:
+    - protocol: TCP
+      port: 9093  # Alertmanager default port
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: prometheus-msteams  # Example: Specify where Alertmanager sends notifications
+    ports:
+    - protocol: TCP
+      port: 443  # Example for HTTPS traffic

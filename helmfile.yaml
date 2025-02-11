@@ -1,0 +1,87 @@
+repositories:
+
+  - name: prometheus
+    url: https://prometheus-community.github.io/helm-charts
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+  - name: fluent
+    url: https://fluent.github.io/helm-charts
+  - name: prometheus-msteams
+    url: https://prometheus-msteams.github.io/prometheus-msteams
+  - name: kubescape
+    url: https://kubescape.github.io/helm-charts/
+
+
+releases:
+  - name: prometheus
+    chart: prometheus/prometheus
+    version: "25.27.0"
+    values:
+      - ./values/prometheus.yaml
+    labels:
+      tool: prometheus
+
+  - name: loki-distributed
+    chart: grafana/loki-distributed
+    version: "0.79.4"
+    values:
+      - ./values/loki-distributed.yaml
+    labels:
+      tool: loki-distributed
+
+  - name: grafana
+    chart: grafana/grafana
+    version: "8.5.5"
+    values:
+      - ./values/grafana_values.yaml
+    labels:
+      tool: grafana
+
+  - name: alloy
+    chart: grafana/alloy
+    version: "0.9.1"
+    values:
+      - ./values/alloy_values.yaml
+    labels:
+      tool: alloy
+
+  - name: tempo
+    chart: grafana/tempo
+    version: "1.10.3"
+    values:
+      - ./values/tempo_values.yaml
+    labels:
+      tool: tempo
+
+  - name: alertmanager
+    chart: prometheus/alertmanager
+    version: "1.13.0"
+    values: 
+      - ./values/alertmanager_values.yaml
+    labels:
+      tool: alertmanager
+
+  - name: fluent
+    chart: fluent/fluent-bit
+    version: "0.47.10"
+    values:
+      - ./values/fluentbit_values.yaml
+    labels:
+      tool: fluent
+
+  - name: prometheus-msteams
+    chart: prometheus-msteams/prometheus-msteams
+    version: "1.3.4"
+    values:
+      - ./values/prometheus-msteams_values.yaml
+    labels:
+      tool: msteams
+
+  - name: kubescape
+    chart: kubescape/kubescape-operator
+    version: "1.23.4"
+    values:
+      - ./values/kubescape_values.yaml
+    labels:
+      tool: kubescape
+      
